@@ -21,6 +21,16 @@ Développé dans les années 80, le NFS s'est ensuite imposé comme la norme en 
     
 > **Note** Pas de panique, ceci est normal, car nous n'avons pas encore configuré les dossiers à "partager":
 
- -  Pour commencer, créez un dossier dans "/var" et donnez tous les droits pour l'utilisateur root. Les autres auront uniquement les droits de lectures et d'accès.
-
    
+   - Pour commencer, créez un dossier dans "/var" et donnez tous les droits pour l'utilisateur root. Les autres auront uniquement les droits de lectures et d'accès.
+       
+    mkdir /var/shared-data
+    chown root:root /var/shared-data
+    chmod 755 /var/shared-data
+    
+
+  Pour partager ce dossier, indiquez cette possibilités dans le fichier "/etc/exports" :
+  
+    # Dossier partagé en lecture seul et accessible par tout le monde
+     /var/a-public-folder *(ro,insecure,all_squash)
+    
