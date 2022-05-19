@@ -137,3 +137,50 @@ Définir le mot de passe et activez l'utilisateur:
        
     sudo chmod 2770 /samba/users
   
+## III/ Configuration des partages Samba:
+
+ Ouvrez le fichier de configuration Samba et ajoutez les sections:
+       
+    sudo nano /etc/samba/smb.conf /etc/samba/smb.conf
+
+path = /samba/users browseable = yes read only = no force create mode = 0660 force directory mode = 2770 valid users = @sambashare @sadmin path = /samba/M.ANDRIAH browseable = no read only = no force create mode = 0660 force directory mode = 2770 valid users = M.ANDRIAH  @sadmin
+
+
+    
+
+  Une fois cela fait, redémarrez les services Samba avec la commande:
+  
+    sudo systemctl restart smbd sudo systemctl restart nmbd
+    
+## IV/Connexion à un partage Samba depuis Linux:
+
+ Les utilisateurs Linux peuvent accéder au partage samba à partir de la ligne de commande, à l'aide de deux methodes:
+  - du gestionnaire de fichiers et 
+  - montage du partage Samba
+  
+Ici je vais vous montrer la première méthode, c'est-à-dire la méthode du gestionnaire de fivhiers.
+  
+ ###### Cela nécessite l'utilisation du client smbclient(un outil qui vous permet d'accéder à Samba à partir de la ligne de commande) :
+ smbclient n'est pas pré-installé sur la plupart des distributions Linux donc il faut l'installé avec:
+ 
+    sudo apt install smbclient
+ 
+La syntaxe pour accéder à un partage Samba est la suivante:
+   
+    mbclient //samba_hostname_or_server_ip/share_name -U username
+    
+ Par exemple, pour vous connecter à un partage nommé M.ANDRIAH sur un serveur Samba avec l'adresse IP 192.168.121.118 tant qu'utilisateur M.ANDRIAH, vous devez exécuter:
+  
+    smbclient //192.168.121.118/josh -U M.ANDRIAH
+    
+ Vous serez invité à saisir le mot de passe utilisateur :
+  
+    Enter WORKGROUP\M.ANDRIAH's password:
+    
+
+ Une fois le mot de passe entré, vous serez connecté à l'interface de ligne de commande Samba:
+       
+    Try "help" to get a list of possible commands. smb: \>
+    
+    
+ ## VOUS POUVEZ MAINTENANT UTILISER SAMBA! COURAGE! 
